@@ -34,5 +34,33 @@ class Account extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	function getAccountByIdOrUsername($id = null) {
+		if (!empty($id)) {
+			$account = $this->find('first', 
+				array(
+					'conditions' => array(
+						'OR' => array(
+							array('User.id' => $id),
+							array('User.username' => $id)
+						),
+					),
+					'fields' => array(
+						'User.id',
+						'User.username',
+						'Account.first_name',
+						'Account.last_name',
+						'Account.email',
+						'Account.image'
+					)
+				)
+			);
+			
+			if (!empty($account)) {
+				return $account;
+			}
+		}
+		return false;
+	}
 }
 ?>

@@ -30,15 +30,16 @@
 
 <div id="container">
 	<div id="header">
-		<div class="logo">
-			<?php echo $html->link($html->image('logo.gif', array('alt' => $appConfigurations['name'], 'title' => $appConfigurations['name'])), '/', null, null, false); ?>
+		<div id="logo">
+			<?php echo $html->link($html->image('logo.gif', array('alt' => $appConfigurations['name'], 'title' => $appConfigurations['name'])), '/', array('escape' => false)); ?>
 		</div>
-		<div class="top-menu">
+		<div id="top-menu">
 			<?php echo $this->element('menu_top');?>
 		</div>
+		
 	</div>
 
-	<div id="maincontent" class="clearfix">
+	<div id="content" class="clearfix">
 		<?php
 			if($session->check('Message.flash')){
 				$session->flash();

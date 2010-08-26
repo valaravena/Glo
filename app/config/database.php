@@ -79,7 +79,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => '/Users/jmashburn/Documents/Projects/Lance/app/config/schema/test_database.sqlite',
+		'database' => '/Users/jmashburn/Documents/Projects/Glow/app/config/schema/glow.sqlite',
 		'prefix' => '',
 		'encoding' => 'UTF8'
 	);

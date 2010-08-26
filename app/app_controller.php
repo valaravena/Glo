@@ -4,16 +4,19 @@ class AppController extends Controller {
     
     var $helpers = array('Html', 'Form', 'Time', 'Number', 'Javascript', 'Cache', 'Text', 'Session','Menu','Sidebar');
     var $components = array('Security', 'Acl', 'Auth', 'Acl.AclFilter', 'Cookie', 'RequestHandler', 'Session', 'Mailer', 'Security');
-    var $uses = array('Core.Setting');
+    var $uses = array('User', 'Core.Setting');
     var $view = 'Theme';      
 
 	var $apiRequest = false;
+	var $apiError = false;
+	var $appConfigurations;
 
 
     function beforeFilter() { 
 		$this->AclFilter->auth();
-		$this->Security->blackHoleCallback = '__securityError';
-        	$this->set('appConfigurations', Configure::read('App'));
+		#$this->Security->blackHoleCallback = '__securityError';
+		$this->appConfigurations = Configure::read('App');
+        $this->set('appConfigurations', $this->appConfigurations);
  		$this->set('title_for_layout', __('Error: Title For Layout needed', true));
 
 		$this->Setting->applyAllUpdates();
@@ -42,157 +45,51 @@ class AppController extends Controller {
 			Configure::write('Config.language', $this->params['locale']);
 		}
 
-
-		
-		
-
-		/*
-
-        if (isset($this->params['prefix']) && $this->params['prefix'] == 'admin') {
-            $this->layout = 'admin';
-
-            if (!empty($this->appConfigurations['sslUrl'])) {
-                if ($_SERVER['REQUEST_URI'] == '/'.$this->params['url']['url']) {
-                    $this->redirect($this->appConfigurations['sslUrl'].$_SERVER['REQUEST_URI']);
-                }
-            }
-        } else {
-            if (!empty($this->appConfigurations['sslUrl'])) {
-                if (!empty($_SERVER['HTTPS'])) {
-                    if ($_SERVER['REQUEST_URI'] == '/'.$this->params['url']['url']) {
-                        $allowedUrls = array('/users/register', '/users/login', '/login');
-                        if (!in_array($_SERVER['REQUEST_URI'], $allowedUrls)) {
-                            $this->redirect($this->appConfigurations['url'].$_SERVER['REQUEST_URI']);
-                        } 
-                    } elseif ($_SERVER['REQUEST_URI'] == '/') {
-                        $this->redirect($this->appConfigurations['url']);
-                    }
-                }
-            }
-
-            if (!empty($this->params['url']) && (($this->params['url']['url'] !== 'proveedors/ingreso') || ($this->params['url']['url'] !== 'ingreso')) 
-                && (($this->params['url']['url'] !== 'users/logout') || ($this->params['url']['url'] !== 'logout'))) {
-                if (!$this->Auth->user('admin')) {
-                    if ($_SERVER['REQUEST_URI'] !== '/offline' && empty($this->params['requested'])) {
-                        #$settings = $this->Settings->get('site_live');
-                        $settings = 'yes';
-                        if ($settings == 'no') {
-                            $this->redirect('/offline');
-                        }
-                    }
-                }
-            }
-        } 
-
-        if (empty($this->params['requested']) && isset($this->Auth)) {
-            $this->_checkAuth();
-        }  
-
-		if ($this->RequestHandler->isXml() || $this->RequestHandler->ext == 'json') {  
-		    Configure::write('debug',1);
+		/* API Actions */
+		if ($this->RequestHandler->isXml() || $this->RequestHandler->ext == 'json') { 
+		    Configure::write('debug',0);
 			$this->Security->loginOptions = array( 
 				'type'=>'basic', 
-				'login'=>'authenticate', 
-				'realm'=>$this->appConfigurations['name']
+				'login'=>'apiLogin', 
+				'realm'=>$this->appConfigurations['name'],
 			);
-			$this->Security->loginUsers = array(); 
-			$this->Security->requireLogin(); 
-			 
-			$status = array();   
-			if ($this->Auth->user()) {   
-				if (empty($this->params['url']['api_key']) || $this->Auth->user('key') != $this->params['url']['api_key']) {
-					$status['status'] = array('code' => 500, 'msg' => 'api_key_incorrect');                 
-				} elseif ($this->appConfigurations['Api']['limitIp']) {   
-					if ($this->Auth->user('ip') != $this->RequestHandler->getClientIp()) {
-						$status['status'] = array('code' => 600, 'msg' => 'ip_no_accepted');
+
+			$status = array(); 
+			$user = array();
+			// Check API Key
+			if (!empty($this->params['url']['api_key'])) {
+				$user = $this->User->findByKey($this->params['url']['api_key']);
+				if (empty($user)) {
+					$status['status'] = array('code' => 500, 'msg' => 'invalid_api_key');
+				}
+			} else {
+				$status['status'] = array('code' => 500, 'msg' => 'missing_api_key');
+				$this->apiError = true;
+			}
+	
+			// Check Limit IP
+			if (!$this->apiError && $this->appConfigurations['Api']['limitIp']) {
+				if (!empty($user)) {
+					if ($user['User']['ip'] != $this->RequestHandler->getClientIp()) {
+						$status['status'] = array('code' => 500, 'msg' => 'ip_not_accepted', 'received' => $this->RequestHandler->getClientIp(), 'expected' => $user['User']['ip']);
+						$this->apiError = true;
 					}
 				}
-			}         
-			$this->set(compact('status'));   
-		} 
-		*/
+			}	
+			$this->set(compact('status'));  
+		}
     }
 
-    function _checkAuth() {      
-	
-		$this->Auth->userModel = 'Usuarios';
-	
-        $this->Auth->fields = array(
-            'username'  => 'usuario',
-            'password'  => 'password'
-        );
-
-        $this->Auth->loginAction = array(
-            'controller' => 'usuarios',
-            'action' => 'ingreso'
-        );
-
-        $this->Auth->logoutRedirect = array(
-            'controller' => 'usuarios',
-            'action' => 'ingreso'
-        );    
-
-		$this->Auth->userScope = array('Usuarios.active' => true);         
-
-        $this->Auth->loginError = sprintf(__('Your %s or %s is incorrect.  Please try again.', true), $this->Auth->fields['username'], $this->Auth->fields['password']);
-
-        $this->Auth->autoRedirect = false;
-
-        $this->Auth->authorize = 'actions';    
-
-
-        if (!$this->Auth->user()) {    
-            if ($id = $this->Cookie->read('Usuario.id')) {
-                $user = $this->Usuario->find('first', array('conditions' => array('Usuario.id' => $id), 'contain' => ''));     
-                if ($this->Auth->login($user)) {
-                    $this->Session->delete('Message.Auth');
-                } else {
-                    $this->Cookie->delete('Usuario.id');
-                }
-            }
-        }
-
-        if ($this->Auth->user()) {      
-            if (empty($user)) {
-                $user = $this->Usuario->find('first', array('conditions' => array('Usuario.id' => $this->Auth->user('id')), 'contain' => ''));
-            }
-            if ($user['Usuario']['active'] == 0) {
-                if ($this->Cookie->read('Usuario.id')) {
-                    $this->Cookie->delete('Usuario.id');
-                }
-                $this->Auth->logout();
-            }
-
-            if (!Cache::read('user_count_'.$user['Usuario']['id'])) {
-                Cache::write('user_count_'.$user['Usuario']['id'], microtime(), 600);
-            }
-        }
-    }
-
-    function isAuthorized() {
-        if (!empty($this->params['admin']) && $this->Auth->user('admin') !=1) {
-            return false;
-        }
-        return true;
-    }
-
-    function _populateLookups($models = array()) {
-        if (empty($models)) {
-            $rootModel = $this->{$this->modelClass};
-            foreach ($rootModel->belongsTo as $model=>$attr) {
-                $models[] = $model;
-            }
-
-            foreach ($rootModel->hasAndBelongsToMany as $model=>$attr) {
-                $models[] = $model;
-            }
-        }
-
-        foreach ($models as $model) {
-            $name = Inflector::variable(Inflector::pluralize($model));
-            $this->set($name, $rootModel->{$model}->find('list'));
-        }
-    }
+	function apiLogin($args) {       
+		$data[$this->Auth->fields['username']] = $args['username'];
+		$data[$this->Auth->fields['password']] = $this->Auth->password($args['password']);   
+		if ($this->Auth->login($data)) { 
+			return true;
+		} else {  
+			$this->Security->blackHole($this, 'login');
+			return false;
+		}
+	}
 
     function _sendEmail($data) {
         if (!empty($data)) {
@@ -342,16 +239,19 @@ class AppController extends Controller {
         }
     }    
 
-	function authenticate($args) {       
-		$data[$this->Auth->fields['username']] = $args['username'];
-		$data[$this->Auth->fields['password']] = $this->Auth->password($args['password']);  
-		if ($this->Auth->login($data)) { 
-			return true;
-		} else {  
-			$this->Security->blackHole($this, 'login');
-			return false;
-		}
-	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/* Can this be placed somewhere else */
 
     function build_acl() {
         if (!Configure::read('debug')) {

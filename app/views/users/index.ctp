@@ -7,19 +7,19 @@
 			<thead>
 				<tr>
 					<th>&nbsp;</th>
-					            		<th><?php echo $this->Paginator->sort('id');?></th>
-					            		<th><?php echo $this->Paginator->sort('group_id');?></th>
-					            		<th><?php echo $this->Paginator->sort('username');?></th>
-					            		<th><?php echo $this->Paginator->sort('first_name');?></th>
-					            		<th><?php echo $this->Paginator->sort('last_name');?></th>
-					            		<th><?php echo $this->Paginator->sort('password');?></th>
-					            		<th><?php echo $this->Paginator->sort('email');?></th>
-					            		<th><?php echo $this->Paginator->sort('active');?></th>
-					            		<th><?php echo $this->Paginator->sort('key');?></th>
-					            		<th><?php echo $this->Paginator->sort('ip');?></th>
-					            		<th><?php echo $this->Paginator->sort('created');?></th>
-					            		<th><?php echo $this->Paginator->sort('modified');?></th>
-							            <th class="actions"><?php __('Actions');?></th>
+            		<th><?php echo $this->Paginator->sort('id');?></th>
+            		<th><?php echo $this->Paginator->sort('group_id');?></th>
+            		<th><?php echo $this->Paginator->sort('username');?></th>
+            		<th><?php echo $this->Paginator->sort('first_name');?></th>
+            		<th><?php echo $this->Paginator->sort('last_name');?></th>
+            		<th><?php echo $this->Paginator->sort('password');?></th>
+            		<th><?php echo $this->Paginator->sort('email');?></th>
+            		<th><?php echo $this->Paginator->sort('active');?></th>
+            		<th><?php echo $this->Paginator->sort('key');?></th>
+            		<th><?php echo $this->Paginator->sort('ip');?></th>
+            		<th><?php echo $this->Paginator->sort('created');?></th>
+            		<th><?php echo $this->Paginator->sort('modified');?></th>
+		            <th class="actions"><?php __('Actions');?></th>
 	            </tr>
 			</thead>
 		    <tbody>
@@ -59,7 +59,7 @@
 <?php endforeach; ?>
 <?php else: ?>
 	<tr>
-		<td colspan=''><?php echo sprintf(__('No %s Found', true), __('User', true)); ?></td>
+		<td colspan='12'><?php echo sprintf(__('No %s Found', true), __('User', true)); ?></td>
 	</tr>
 <?php endif; ?>
 			</tbody>

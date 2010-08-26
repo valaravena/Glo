@@ -42,6 +42,8 @@ class SuperRouter extends Router {
 	SuperRouter::connect('/register', array('controller' => 'users', 'action' => 'register'));
 	SuperRouter::connect('/login', array('controller' => 'users', 'action' => 'login'));
 	SuperRouter::connect('/recover', array('controller' => 'users', 'action' => 'recover'));
+	
+	Router::parseExtensions('xml','json', 'csv');
 
 
 

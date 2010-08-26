@@ -8,6 +8,8 @@ App:
     theme: cleanity
     name: Smart Admin
     base: finalus
+    Api: 
+        limitIp: true
 Site:
     name: 
     theme: 
@@ -17,3 +19,6 @@ Hook:
     bootstraps: core,acl
     components: 
     routes: core,acl
+
+Api:
+	limitIp: true

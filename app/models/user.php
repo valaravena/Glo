@@ -9,8 +9,33 @@ class User extends AppModel {
 
     var $actsAs = array('Containable', 'Acl.Acl' => 'requester');
 
-    var $belongsTo = array('Group');
+	var $belongsTo = array(
+		'Group' => array(
+			'className' => 'Group',
+			'foreignKey' => 'group_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
 
+	var $hasMany = array(
+		'Account' => array(
+			'className' => 'Account',
+			'foreignKey' => 'user_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+	
+	
     function __construct($id = false, $table = null, $ds = null) {
         parent::__construct($id, $table, $ds);
 
@@ -258,4 +283,31 @@ class User extends AppModel {
             return false;
         }
     }
+
+	function getUserByIdOrUsername($id = null) {
+		if (!empty($id)) {
+			$user = $this->find('first', 
+				array(
+					'conditions' => array(
+						'OR' => array(
+							array('User.id' => $id),
+							array('User.username' => $id)
+						),
+					),
+				/*	'fields' => array(
+						'User.id',
+						'User.first_name',
+						'User.last_name',
+						'User.username',
+						'User.email',
+					)*/
+				)
+			);
+
+			if (!empty($user)) {
+				return $user;
+			}
+		}
+		return false;
+	}
 }

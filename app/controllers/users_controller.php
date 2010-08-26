@@ -12,6 +12,8 @@ class UsersController extends AppController {
     function beforeFilter() {
         parent::beforeFilter();
 
+		$this->Security->requireLogin('authenticate');
+
         if (!empty($this->Auth)) {
             $this->Auth->allow('activate', 'register', 'reset', 'recover', 'resend', 'login', 'logout');
             $this->Auth->allow('*');
@@ -20,7 +22,7 @@ class UsersController extends AppController {
 
     function index() {}
 
-    function login() {                                 
+    function login() {       
         if (!empty($this->data)) {    
             if ($this->data['User']['remember_me'] == 1) {    
                 $this->Cookie->write('User.id', $this->Auth->user('id'));
@@ -235,5 +237,26 @@ class UsersController extends AppController {
 			$this->Session->setFlash(sprintf(__('%s deleted', true), 'User'));
 			$this->redirect(array('action' => 'index'));
 		}
+	}
+	
+	
+	
+	/*   API STUFF */
+	
+	function authenticate() {
+		$user = array();
+		if ($this->Auth->user('id')) {
+			$this->log('Logged in as '. $this->Auth->user('username'));
+			$user = $this->User->Account->getAccountByIdOrUsername($this->Auth->user('id'));
+		}
+		$this->set(compact('user'));
+	}
+	
+	function profile() {
+		$user = arrray();
+		
+		
+		$this->set(compact('user'));
+		
 	}
 }

@@ -6,8 +6,10 @@ App:
     baseUrl: 
     timezone: America/Santiago
     theme: cleanity
-    name: Smart Admin
+    name: Gridglo
     base: finalus
+    Api: 
+        limitIp: true
 Site:
     name: 
     theme: 
