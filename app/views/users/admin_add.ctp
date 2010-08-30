@@ -16,6 +16,7 @@
 		echo $form->input('email', array('label' => array('text' => __('Email', true), 'class' => 'field-title'), 'class' => 'txtbox-long'));
 		echo $form->input('password_before', array('type' => 'password', 'label' => array('text' => __('Password', true), 'class' => 'field-title'), 'class' => 'txtbox-long'));
 		echo $form->input('password_confirmation', array('type' => 'password', 'label' => array('text' => __('Password Confirmation', true), 'class' => 'field-title'), 'class' => 'txtbox-long'));
+		echo $form->input('ip', array('label' => array('text' => __('IP Address', true), 'class' => 'field-title'), 'class' => 'txtbox-long'));
 		echo $form->input('active', array('type' => 'checkbox', 'label' => array('text' => __('Active', true), 'class' => 'field-title')));
 		echo $this->Form->input('group_id', array('label' => array('text' => __('Group', true), 'class' => 'field-title')));
 	?>

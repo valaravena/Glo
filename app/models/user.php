@@ -96,6 +96,12 @@ class User extends AppModel {
                     'message' => __('A valid email is required.', true)
                 ), 
             ),
+	    'ip' => array(
+		'userIp' => array(
+		    'rule' => 'ip',
+		    'message' => __('Please specify a valid ip address', true)
+		),
+	    ),
         );
     }
 
