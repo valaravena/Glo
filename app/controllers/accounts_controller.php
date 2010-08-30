@@ -2,6 +2,12 @@
 class AccountsController extends AppController {
 
 	var $name = 'Accounts';
+	
+	function beforeFilter() {
+        parent::beforeFilter();
+
+		$this->Security->requireLogin('authenticate');
+    }
 
 	function index() {
 		$this->Account->recursive = 0;
@@ -137,9 +143,14 @@ class AccountsController extends AppController {
 	function authenticate() {
 		$account = array();
 		if ($this->Auth->user('id')) {
+			$this->Account->recursive = 0;
 			$account = $this->Account->getAccountByIdOrUsername($this->Auth->user('id'));
 			if (!empty($account)) {
-				$account = am($account['User'], $account['Account']);
+			#	$account['User'] = 
+			#	$return['User'] = 
+			#	$account['Account'] = array($account['Account'][])
+				
+				#$account = am($account['User'], $account['Account']);
 			}
 		}
 		$this->set(compact('account'));

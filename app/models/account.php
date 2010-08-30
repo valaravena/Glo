@@ -45,17 +45,9 @@ class Account extends AppModel {
 							array('User.username' => $id)
 						),
 					),
-					'fields' => array(
-						'User.id',
-						'User.username',
-						'Account.first_name',
-						'Account.last_name',
-						'Account.email',
-						'Account.image'
-					)
 				)
 			);
-			
+
 			if (!empty($account)) {
 				return $account;
 			}

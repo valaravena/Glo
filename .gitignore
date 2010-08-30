@@ -1,6 +1,7 @@
 /cakephp
 
 /app/config/*.yml
+/app/tmp/cache/*.*
 /app/tmp/cache/persistent/cake_*
 /app/tmp/cache/models/cake_*
 /app/tmp/cache/views/cake_*

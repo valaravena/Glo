@@ -36,7 +36,7 @@ class SuperRouter extends Router {
 
 	// Pages
 	SuperRouter::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-	SuperRouter::connect('/pages/:slug', array('controller' => 'pages', 'action' => 'display'));
+	SuperRouter::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 	
 	// Users
 	SuperRouter::connect('/register', array('controller' => 'users', 'action' => 'register'));
