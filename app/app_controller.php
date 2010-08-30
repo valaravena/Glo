@@ -70,7 +70,7 @@ class AppController extends Controller {
 			// Check Limit IP
 			if (!$this->apiError && $this->appConfigurations['Api']['limitIp']) {
 				if (!empty($user)) {
-					if ($user['User']['ip'] != $this->RequestHandler->getClientIp()) {
+					if (!empty($user['User']['ip']) && $user['User']['ip'] != $this->RequestHandler->getClientIp()) {
 						$status['status'] = array('code' => 500, 'msg' => 'ip_not_accepted', 'received' => $this->RequestHandler->getClientIp(), 'expected' => $user['User']['ip']);
 						$this->apiError = true;
 					}
