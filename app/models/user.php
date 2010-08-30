@@ -99,7 +99,8 @@ class User extends AppModel {
 	    'ip' => array(
 		'userIp' => array(
 		    'rule' => 'ip',
-		    'message' => __('Please specify a valid ip address', true)
+		    'message' => __('Please specify a valid ip address', true),
+		    'allowEmpty' => true,
 		),
 	    ),
         );
