@@ -10,4 +10,3 @@
 /app/webroot/files/**/*.*
 
 /app/config/config.php
-/app/config/schema/*.sqlite
