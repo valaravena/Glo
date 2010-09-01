@@ -1,0 +1,19 @@
+SimpleGeo:
+    Version: 0.1.0
+    
+Menu:
+    plugins:
+        title: Plugins
+        sort_order: 50
+        url:
+            admin: true
+            controller: plugins
+        children:
+            simple_geo:
+                title: Simple Geo
+                sort_order: 10
+                url:
+                    admin: true
+                    controller: simple_geo
+
+            

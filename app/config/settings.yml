@@ -16,6 +16,6 @@ Site:
     admin_theme: cleanity
     status: 1
 Hook: 
-    bootstraps: core,acl
+    bootstraps: core,acl,simple_geo
     components: 
-    routes: core,acl
+    routes: core,acl,simple_geo

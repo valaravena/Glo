@@ -10,13 +10,16 @@ class AppController extends Controller {
 	var $apiRequest = false;
 	var $apiError = false;
 	var $appConfigurations;
-
+	
+    function __construct() {
+	parent::__construct();
+	$this->appConfigurations = Configure::read('App');
+	$this->set('appConfigurtions', $this->appConfigurations);
+    }
 
     function beforeFilter() { 
 		$this->AclFilter->auth();
 		#$this->Security->blackHoleCallback = '__securityError';
-		$this->appConfigurations = Configure::read('App');
-        $this->set('appConfigurations', $this->appConfigurations);
  		$this->set('title_for_layout', __('Error: Title For Layout needed', true));
 
 		$this->Setting->applyAllUpdates();

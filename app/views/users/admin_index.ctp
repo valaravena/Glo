@@ -10,9 +10,6 @@ echo $sidebar->addMenu('list groups', array('title' => sprintf(__('List %s', tru
 echo $sidebar->addMenu('new groups', array('title' => sprintf(__('New %s', true), __('Group', true)), 'sort_order' => 20, array('controller' => 'groups', 'action' => 'add')), 'groups');
 ?>
 
-
-
-
 <div class="box">
 <div class="box-top rounded_by_jQuery_corners" style="-moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px;">
     <h4 class="white"><?php __('Users');?></h4>
@@ -27,7 +24,7 @@ echo $sidebar->addMenu('new groups', array('title' => sprintf(__('New %s', true)
             		<th><?php echo $this->Paginator->sort('last_name');?></th>
             		<th><?php echo $this->Paginator->sort('active');?></th>
             		<th><?php echo $this->Paginator->sort('group_id');?></th>
-		            <th class="actions"><?php __('Actions', true);?></th>
+		            <th class="actions"><a href="">Link</a><?php __('Actions', true);?></th>
 	            </tr>
 			</thead>
 		    <tbody>

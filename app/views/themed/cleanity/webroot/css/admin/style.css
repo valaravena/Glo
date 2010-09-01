@@ -208,3 +208,6 @@ div#footer-bottom p a{color:#ccc;text-decoration:none;}
 .pagination a:hover{font-size:11px;text-decoration:none;color:#000000;border:1px solid #A7A7A7;background-color:white;padding:3px;-moz-border-radius:3px;}
 .pagination span.current{font-size:10px;text-decoration:none;color:#FFF;border:1px solid #999;background-color:#666;padding:3px;-moz-border-radius:3px;}
 .pagination span.disabled{font-size:10px;text-decoration:none;color:#C6C7C7;border:1px solid #C6C7C7;background-color:white;padding:3px;-moz-border-radius:3px;}
+
+.loading { margin:0 auto; background: url(../../img/admin/loader.gif) no-repeat; padding: 10px 0 10px 50px;}
+

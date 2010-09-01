@@ -255,7 +255,6 @@ class UsersController extends AppController {
 	function profile() {
 		$user = arrray();
 		
-		
 		$this->set(compact('user'));
 		
 	}

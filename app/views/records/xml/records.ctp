@@ -1,0 +1,1 @@
+<?php echo $xml->serialize($records, array('root' => 'rsp')); ?>
