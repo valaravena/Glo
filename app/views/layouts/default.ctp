@@ -13,12 +13,27 @@
 		if(!empty($meta_keywords)) :
 			echo $html->meta('keywords', $meta_keywords);
 		endif;
+		echo $html->css('reset');
 		echo $html->css('style');
-		echo $javascript->link('http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js');
+		echo $html->css('clear');
+		echo $javascript->link('http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'); 
+		echo $javascript->link('jquery/jquery.inlineedit'); 
+		echo $javascript->link('common');
 		echo $scripts_for_layout;
 	?>
 </head>
 <body>
+	<div id="message">
+		<?php
+			if($session->check('Message.flash')){
+				echo $session->flash();
+			}
+
+			if($session->check('Message.auth')){
+				echo $session->flash('auth');
+			}
+		?>
+	</div>
 	<div id="container">
 		<div id="header">
 			<div id="logo">
@@ -30,30 +45,12 @@
 		</div>
 
 		<div id="content" class="clearfix">
-			<?php echo $this->element('home_flash')?>
-			<div id="left-col">
-				<?php echo $this->element('home_login')?>
-				<?php echo $this->element('home_platform'); ?>
-				<?php
-					if($session->check('Message.flash')){
-						$session->flash();
-					}
-
-					if($session->check('Message.auth')){
-						$session->flash('auth');
-					}
-				?>
-				<?php echo $content_for_layout; ?>
-			</div>
-			<div id="right-col">
-				<?php echo $this->element('home_demo');?>
-			</div>
+			<?php echo $content_for_layout; ?>
 			<span class="clearFix"></span>
-			
-			
 		</div>
 		<?php echo $this->element('footer');?>
 	</div>
+	<div id="mask"><div id="modal" class="modal-container"><div id="modal-content"></div><div id="modal-close">&nbsp;</div></div></div>
 	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

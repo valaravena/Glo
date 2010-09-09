@@ -7,7 +7,7 @@ class UsersController extends AppController {
     var $name = 'Users';
 
     var $components = array('Recaptcha');
-    var $helpers = array('Recaptcha');
+    var $helpers = array('Recaptcha', 'SimpleGeo.GoogleMap');
 
     function beforeFilter() {
         parent::beforeFilter();
@@ -20,11 +20,36 @@ class UsersController extends AppController {
         }
     }
 
-    function index() {}
+    function index() {    
+		$simpleGeoLayer = 'iWobbleTestLayer';
+	   	$points = array();
+		if (!empty($simpleGeoLayer)) {
+			if (!empty($this->params['url']['hash'])) {
+				$result = $this->SimpleGeo->getNearby($simpleGeoLayer, $this->params['url']['hash'], array('limit' => 50, 'radius' => 200));
+				if (!empty($result->features)) {
+					foreach ($result->features as $feature) {
+						$point['Point']['id'] = $feature->id;
+						$point['Point']['name'] = $feature->id;
+	                	$point['Point']['longitude'] = $feature->geometry->coordinates[0];
+	                	$point['Point']['latitude'] = $feature->geometry->coordinates[1];
+	                	$point['Point']['created'] = $feature->created;
+	                	$points[] = $point;
+	            	}
+	        	} else {
+					if (!empty($result->message)) {
+						#die($result->message);
+					}
+				}
+			}
+			$this->set('points', $points);
+		}
+	}
 
     function login() {       
+		$this->set('title_for_layout', __('Login', true));
         if (!empty($this->data)) {    
-            if ($this->data['User']['remember_me'] == 1) {    
+            if (!empty($this->data['User']['remember_me']) && 
+				$this->data['User']['remember_me'] == 1) {    
                 $this->Cookie->write('User.id', $this->Auth->user('id'));
             }
         }
@@ -42,14 +67,17 @@ class UsersController extends AppController {
     }
 
     function register($status = '') {
-        if (!$this->Session->check('Auth.User')) {
+		$this->set('title_for_layout', __('Register with Gridglo', true));        
+        if (!$this->Session->check('Auth.User')) {                                
             if (!empty($this->data)) {
+				$this->data['User']['group_id'] = 3;
+				$this->data['User']['active'] = 1;
                 if ($user = $this->User->register($this->data)) {
                     $this->_sendEmail($user);
                     $this->Session->write('Registration.email', $user['to']);
                     $this->redirect(array('action' => 'register', 'success'));
                 } else {
-                    $this->Session->setFlash(__('We were unable to register your account!', true));
+                    $this->Session->setFlash(__('We were unable to register your account!', true), 'error');
                 }
             } elseif ($status) {
                 if ($this->Session->check('Registration.email')) {
@@ -71,10 +99,10 @@ class UsersController extends AppController {
                 if ($user = $this->User->activate($key)) {
                     $this->Auth->login($user);
                     $this->_sendEmail($user);
-                    $this->Session->setFlash(__('Your account is verified!', true));
+                    $this->Session->setFlash(__('Your account is verified!', true), 'success');
                     $this->redirect(array('action' => 'done'));
                 } else {
-                    $this->Session->setFlash(__('We were unable to verify you account! Account may already be active.', true));
+                    $this->Session->setFlash(__('We were unable to verify you account! Account may already be active.', true), 'error');
                     $this->redirect(array('action' => 'login'));
                 }
             } else {
@@ -111,13 +139,14 @@ class UsersController extends AppController {
     }
 
     function recover() {
+		$this->set('title_for_layout', __('Reset your Password', true));
         if (!empty($this->data)) {
             if ($user = $this->User->recover($this->data)) {
                 $this->_sendEmail($user);
-                $this->Session->setFlash(__('Password Change Email has been sent!', true));  
-                $this->redirect(array('action' => 'recover'));
+                $this->Session->setFlash(__('Password Change Email has been sent!', true), 'success');  
+                $this->redirect(array('action' => 'login'));
             } else {
-                $this->Session->setFlash(__('No user found with that email', true)); 
+                $this->Session->setFlash(__('No user found with that email', true), 'error'); 
             }
         }
     }
@@ -147,11 +176,27 @@ class UsersController extends AppController {
             if ($user = $this->User->resend($email)) {
                 $this->_sendEmail($user);
             } else {
-                $this->Session->setFlash(__('Unable to send activation email.  It may be that the account is already active or the email doesn\'t exisit.', true)); 
+                $this->Session->setFlash(__('Unable to send activation email.  It may be that the account is already active or the email doesn\'t exisit.', true), 'error'); 
             }
         }
         $this->redirect(array('action' => 'login'));
     }
+
+	function changepassword() {
+		$this->layout = 'account';
+		$this->set('title_for_layout', __('Change Password', true));
+		if (!empty($this->data)) {
+			if ($user = $this->User->reset($this->data)) {
+				$this->Session->setFlash(__('Password Change Email has been sent!', true), 'success');  
+                $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('Unable to change your password.  Please try again.', true), 'error');
+				$this->redirect(array('action' => 'changepassword'));
+			}
+		}
+	}
+	
+
 
 
     function admin_login() {
@@ -252,10 +297,5 @@ class UsersController extends AppController {
 		$this->set(compact('user'));
 	}
 	
-	function profile() {
-		$user = arrray();
-		
-		$this->set(compact('user'));
-		
-	}
+
 }

@@ -3,6 +3,8 @@ class AccountsController extends AppController {
 
 	var $name = 'Accounts';
 	
+	var $helpers = array('Gravatar');
+	
 	function beforeFilter() {
         parent::beforeFilter();
 
@@ -74,6 +76,30 @@ class AccountsController extends AppController {
 		$this->Session->setFlash(__('Account was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	function profile() {
+		$this->set('title_for_layout', __('Account Profile', true));
+		if ($this->Auth->user()) {
+			$account = $this->Account->findByUserId($this->Auth->user('id'));
+			$account['Account']['full_name'] = $account['Account']['first_name'] . " ". $account['Account']['last_name'];
+			if (!empty($this->data)) {
+				list($this->data['Account']['first_name'], $this->data['Account']['last_name']) = explode(" ", trim($this->data['Account']['full_name']));
+				debug($this->data);
+				die();
+				
+				if ($user = $this->Account->register($this->data, $this->Auth->user('id'))) {
+					$this->Session->setFlash(__('Your profile as been updated.', true), 'success');
+					$this->redirect(array('action' => 'account'));
+				} else {
+					$this->Session->setFlash(__('Your profile could not be saved. Please, try again.', true), 'error');
+				}
+			}
+			$this->data =$account;
+		} else {
+			$this->redirect('/login');
+		}
+	}
+	
 	function admin_index() {
 		$this->Account->recursive = 0;
 		$this->set('accounts', $this->paginate());
@@ -154,6 +180,20 @@ class AccountsController extends AppController {
 			}
 		}
 		$this->set(compact('account'));
+	}   
+	
+	
+	function location() {    
+		debug($this->params);
+		if (!$this->RequestHandler->isAjax()) {
+            $this->redirect(array('action' => 'index'));
+        }
+		if (!empty($location)) {
+			echo $location;
+		}                   
+		echo "NO Location";
+		
+		
 	}
 	
 	

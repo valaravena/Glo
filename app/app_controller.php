@@ -12,15 +12,18 @@ class AppController extends Controller {
 	var $appConfigurations;
 	
     function __construct() {
-	parent::__construct();
-	$this->appConfigurations = Configure::read('App');
-	$this->set('appConfigurtions', $this->appConfigurations);
+		parent::__construct();	
+		$this->appConfigurations = Configure::read('App');
+		$this->set('appConfigurations', $this->appConfigurations);
     }
+
 
     function beforeFilter() { 
 		$this->AclFilter->auth();
 		#$this->Security->blackHoleCallback = '__securityError';
- 		$this->set('title_for_layout', __('Error: Title For Layout needed', true));
+ 		$this->set('title_for_layout', __('Error: Title For Layout needed', true));   
+
+$this->Security->validatePost = false;
 
 		$this->Setting->applyAllUpdates();
 		

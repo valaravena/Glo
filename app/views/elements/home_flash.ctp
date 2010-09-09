@@ -7,6 +7,7 @@
 		</object>
 	</div>
 	<div id="content-top-right" class="clearfix">
+		
 		<?php echo $this->element('home_news')?>
 	</div>
 	<span class="clearFix"></span>

@@ -8,8 +8,14 @@ App:
     theme: cleanity
     name: Gridglo
     base: finalus
+    support: jmashburn@iwobble.com
+    url: http://glow
     Api: 
         limitIp: true
+    Dob:
+        year_min: 100
+        year_max: 17
+
 Site:
     name: 
     theme: 
@@ -19,3 +25,21 @@ Hook:
     bootstraps: core,acl,simple_geo
     components: 
     routes: core,acl,simple_geo
+Recaptcha:
+    enabled:false
+    secure_server: false
+    public_key: 6LeI3gcAAAAAAGn_vy1_e1MUca3SX-DtguDp3vAD
+    private_key: 6LeI3gcAAAAAAHwWxEfVtX_4SJFAG0qykpEPTI5a
+Email:
+    IsSMTP: true
+    IsHTML: true
+    SMTPAuth: true
+    SMTPSecure: ssl
+    Host: smtp.gmail.com
+    Port: 465
+    WordWrap: 50
+    Username: jmashburn@iwobble.com
+    Password: j1a2r3e4d5
+    From: jmashburn@iwobble.com
+    FromName: Jared Mashburn
+    ReplyTo: jmashburn@iwobble.com

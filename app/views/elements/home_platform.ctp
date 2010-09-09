@@ -1,4 +1,4 @@
-<div class="box" style="width: 345px">
+<div class="box" style="width: 360px;float:right">
 	<div class="topleft">
 		<div class="topright">
 			<div>

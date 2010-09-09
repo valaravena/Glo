@@ -62,13 +62,25 @@ class User extends AppModel {
                     'message' => __('Username is a required field', true)
                 )
             ),
+			'password' => array(
+				'notEmpty' => array(
+					'rule' => 'notEmpty',
+					'message' => __('A valid password is required.', true)
+				)
+			),
+			'old_password' => array(
+				'old_password' => array(
+					'rule' => array('minLength', 1),
+					'message' => __('Please enter your current password.', true)
+				),
+			),
             'password_before' => array(
                 'between' => array(
                     'rule' => array('between', 6, 20),
                     'message' => __('Password must be between 6 and 20 characters long.', true)
                 ),
-                'minLength' => array(
-                    'rule' => array('minLength', '1'),
+                'notEmpty' => array(
+                    'rule' => 'notEmpty',
                     'message' => __('A valid password is required.', true)
                 ),
             ),
@@ -83,10 +95,10 @@ class User extends AppModel {
                 ),
             ),    
             'email' => array(
-                'isUnique' => array(
-                    'rule' => array('isUnique', 'email'),
-                    'message' => __('The email was already used by another user.', true)
-                ),
+               # 'isUnique' => array(
+               #     'rule' => array('isUnique', 'email'),
+               #     'message' => __('The email was already used by another user.', true)
+               # ),
                 'email' => array(
                     'rule' => 'email',
                     'message' => __('The email you provided does not appear to be valid.', true)
@@ -96,6 +108,9 @@ class User extends AppModel {
                     'message' => __('A valid email is required.', true)
                 ), 
             ),
+
+			//  Change Password
+			
 	    'ip' => array(
 		'userIp' => array(
 		    'rule' => 'ip',
@@ -144,8 +159,8 @@ class User extends AppModel {
 					$data['User']['key']  = Security::hash(uniqid(rand(), true).Configure::read('Security.salt'));
 				}
                 
-                if (!empty($data['User']['password_before'])) {
-                    $data['User']['password'] = Security::hash(Configure::read('Security.salt').$data['User']['password_before']);
+                if (!empty($data['User']['before_password'])) {
+                    $data['User']['password'] = Security::hash(Configure::read('Security.salt').$data['User']['before_password']);
                 }
 
                 if (!empty($id)) {
@@ -156,18 +171,15 @@ class User extends AppModel {
                 }
                 if ($this->save($data)) {
                     $user = $this->read(null, $this->getLastInsertId());
-
-                	
-
-                    #$user['User']['username']       = $data['User']['username'];
-                    #$user['User']['password']       = $data['User']['before_password'];
-                    #$user['User']['activate_link']  = $this->appConfigurations['url'].'/users/activate/'. $data['User']['key'];
-                    #$user['to']                     = $data['User']['email'];
+                    $user['User']['username']       = $data['User']['username'];
+                    $user['User']['password']       = $data['User']['before_password'];
+                    $user['User']['activate_link']  = $this->appConfigurations['url'].'/users/activate/'. $data['User']['key'];
+                    $user['to']                     = $data['User']['email'];
                    # if ($admin == true) {
                    # } else {
-                   #     $user['subject']            = sprintf(__('Registration Verification - %s', true), $this->appConfigurations['name']);
+                        $user['subject']            = sprintf(__('Registration Verification - %s', true), $this->appConfigurations['name']);
                    # }
-                   # $user['template']               = 'users/activate';
+                    $user['template']               = 'users/activate';
 
                     return $user;
                 } else {

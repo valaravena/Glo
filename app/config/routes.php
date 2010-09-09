@@ -1,42 +1,22 @@
 <?php
 
-class SuperRouter extends Router {
-	
-	function connect($route , $default = array(), $params = array()) {
-		parent::connect($route, $default, $params);
-		if ($route == '/') {
-			$route = '';
-		}
-		parent::connect('/:locale', $default, array_merge(array('locale' => '[a-z]{3}'), $params));
-	}
-	
-	function plugins() {
-		$pluginRoutes = Configure::read("Hook.routes");
-		if (!$pluginRoutes) {
-			return;
-		}
-		
-		$plugins = explode(',', $pluginRoutes);
-		foreach ($plugins as $plugin) {
-			if (file_exists(APP.'plugins'.DS.$plugin.DS.'config'.DS.'routes.php')) {
-				require_once(APP.'plugins'.DS.$plugin.DS.'config'.DS.'routes.php');
-			}
-		}
-	}
-}
+	#App::import('Lib', 'super_router');
 
-	SuperRouter::plugins();
+	require_once APP.'libs'.DS.'super_router.php';
+	
+	#SuperRouter::plugins();
 
-	if (!isInstalled()) {
-		SuperRouter::connect('/', array('plugin' => 'install', 'controller' => 'wizard'));
-	}
+	#if (!isInstalled()) {
+	#	SuperRouter::connect('/', array('plugin' => 'install', 'controller' => 'wizard'));
+	#}
 	
 	// Basic
 	SuperRouter::connect('/admin', array('admin' => true, 'controller' => 'dashboard'));
 
 	// Pages
-	SuperRouter::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-	SuperRouter::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+	SuperRouter::connect('/', array('controller' => 'pages', 'action' => 'home', 'home'));
+	#SuperRouter::connect('/pages/*', array('controller' => 'pages', 'action' => 'view'));
+	SuperRouter::connect('/contact', array('controller' => 'pages', 'action' => 'contact'));
 	
 	// Users
 	SuperRouter::connect('/register', array('controller' => 'users', 'action' => 'register'));
@@ -44,6 +24,7 @@ class SuperRouter extends Router {
 	SuperRouter::connect('/recover', array('controller' => 'users', 'action' => 'recover'));
 	
 	Router::parseExtensions('xml','json', 'csv');
+
 
 
 

@@ -104,9 +104,7 @@ class ContentServerBehavior extends ModelBehavior{
 					} elseif (!empty($data['Idioma'])) {
 						$this->_addMetadataXml('language', $data['Idioma']['code']);
 					} 
-					
-					print_r($data);
-					die();   
+
 
 					if (!empty($data['Contenido'])) {
 						if (is_array($data['Contenido']) && empty($data['Contenido']['id'])) {  
@@ -137,7 +135,10 @@ class ContentServerBehavior extends ModelBehavior{
 										foreach ($content['Producto'] as $pkey => $product) {
 											$this->_addPackageXml('identifier', $product['id']);
 											if (!empty($product['resource'])) {
+												$packageElement->addAttribute('action', 'replace');
 												$this->_addPackageXml('resource', $product['resource']);
+											} else {
+												$packageElement->addAttribute('action' => 'add');	
 											}
 											#$this->_addPermissionXml('display', 'test3', array('test' => 'test'));   
 					   
@@ -179,7 +180,10 @@ class ContentServerBehavior extends ModelBehavior{
 									foreach ($data['Producto'] as $product) {
 										$this->_addPackageXml('identifier', $product['id']);
 										if (!empty($product['resource'])) {
+											$packageElement->addAttribute('action', 'replace');
 											$this->_addPackageXml('resource', $product['resource']);
+										} else {
+											$packageElement->addAttribute('action', 'add');
 										}
 										$this->_addPermissionXml('display', 'test2', 'val');
 										$this->_createXmlFile($this->_xmlSource, $this->_removeExtension($data['Contenido']['archivo'])."-".$product['id']);
@@ -188,8 +192,12 @@ class ContentServerBehavior extends ModelBehavior{
 									// If Editing Product
 									$this->_addPackageXml('identifier', $data['Producto']['id']);
 									if (!empty($product['resource'])) {
+										$packageElement->addAttribute('action', 'replace');
 										$this->_addPackageXml('resource', $data['Producto']['resource']);
+									} else {
+										$packageElement->addAttribute('action', 'add');
 									}
+									
 									#$this->_addPermissionXml('display', 'test1', array('test' => 'test'));
 									$this->_createXmlFile($this->_xmlSource, $this->_removeExtension($data['Contenido']['archivo'])."-".$data['Producto']['id']);
 								}

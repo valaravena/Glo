@@ -1,9 +1,32 @@
 <?php
 class Account extends AppModel {
 	var $name = 'Account';
-	var $displayField = 'first_name';
+	var $displayField = 'account_type_id';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
+     
+	var $actsAs = array(
+		'FileUpload'  => array(
+			'image' => array(
+				'required'				=> array('add' => true, 'edit' => false),
+				'directory'				=> 'img/publicacion',
+				'allowed_mime'			=> array('image/jpg', 'image/jpeg'),
+				'allowed_extensions'	=> array('.jpg', '.jpeg'),
+				'allowed_size'			=> 2097152,
+				'random_filename'		=> true,
+				'resize'	=> array(      
+					'70' => array(
+						'directory' => 'img/140',
+						'width'         => 140,
+						'phpThumb'      => array(
+							'far'   => 1,
+							'bg'    => 'FFFFFF'   
+						)                             
+			   	    )                              
+				)
+		    )
+	    )                                                                     
+	);  
+	
 	var $belongsTo = array(
 		'AccountType' => array(
 			'className' => 'AccountType',
@@ -34,6 +57,7 @@ class Account extends AppModel {
 			'order' => ''
 		)
 	);
+	
 	
 	function getAccountByIdOrUsername($id = null) {
 		if (!empty($id)) {
