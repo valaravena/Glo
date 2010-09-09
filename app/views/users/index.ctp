@@ -1,3 +1,13 @@
+<?php
+echo $javascript->link("http://www.google.com/jsapi");
+echo $javascript->codeBlock("google.load('maps', '3',  {other_params:'sensor=false'});");
+echo $javascript->codeBlock();
+?>
+$(document).ready(function() {
+	$.get('<?php echo $html->url(array('admin' => false, 'plugin' => 'simple_geo', 'controller' => 'simple_geo', 'action' => 'nearby', $simpleGeoLayer['SimpleGeoLayer']['name'],)) ?>', {hash: google.loader.ClientLocation.latitude+','+google.loader.ClientLocation.longitude}, function (data) { $("#map_box").html(data)});
+})
+<?php echo $javascript->blockEnd();?>
+
 <div class="clearfix"></div>
 <div id="left-col">
 	<div class="box" style="width:99%">

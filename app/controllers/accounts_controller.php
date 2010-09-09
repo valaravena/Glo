@@ -82,10 +82,10 @@ class AccountsController extends AppController {
 		if ($this->Auth->user()) {
 			$account = $this->Account->findByUserId($this->Auth->user('id'));
 			$account['Account']['full_name'] = $account['Account']['first_name'] . " ". $account['Account']['last_name'];
-			if (!empty($this->data)) {
-				list($this->data['Account']['first_name'], $this->data['Account']['last_name']) = explode(" ", trim($this->data['Account']['full_name']));
-				debug($this->data);
-				die();
+			if (!empty($this->data)) {         
+				$fullName = explode(" ", trim($this->data['Account']['full_name']));
+				list($lastName) = $fullName;  
+				die($lastName);
 				
 				if ($user = $this->Account->register($this->data, $this->Auth->user('id'))) {
 					$this->Session->setFlash(__('Your profile as been updated.', true), 'success');
