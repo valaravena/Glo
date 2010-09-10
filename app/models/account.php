@@ -9,8 +9,8 @@ class Account extends AppModel {
 			'image' => array(
 				'required'				=> array('add' => true, 'edit' => false),
 				'directory'				=> 'img/profile',
-				'allowed_mime'			=> array('image/jpg', 'image/jpeg'),
-				'allowed_extensions'	=> array('.jpg', '.jpeg'),
+				'allowed_mime' 	    => array('image/jpeg', 'image/pjpeg', 'image/gif', 'image/png'),
+				'allowed_extensions' => array('.jpg', '.jpeg', '.png', '.gif'),
 				'allowed_size'			=> 2097152,
 				'random_filename'		=> true,
 				'resize'	=> array(      
