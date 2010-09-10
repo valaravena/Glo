@@ -8,14 +8,14 @@ class Account extends AppModel {
 		'FileUpload'  => array(
 			'image' => array(
 				'required'				=> array('add' => true, 'edit' => false),
-				'directory'				=> 'img/publicacion',
+				'directory'				=> 'img/profile',
 				'allowed_mime'			=> array('image/jpg', 'image/jpeg'),
 				'allowed_extensions'	=> array('.jpg', '.jpeg'),
 				'allowed_size'			=> 2097152,
 				'random_filename'		=> true,
 				'resize'	=> array(      
 					'70' => array(
-						'directory' => 'img/140',
+						'directory' => 'img/profile/140',
 						'width'         => 140,
 						'phpThumb'      => array(
 							'far'   => 1,

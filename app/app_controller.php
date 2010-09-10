@@ -49,6 +49,11 @@ $this->Security->validatePost = false;
 		
 		if (isset($this->params['locale'])) {
 			Configure::write('Config.language', $this->params['locale']);
+		}  
+		
+ 		if ($this->Auth->user()) {
+			$account = $this->User->Account->findByUserId($this->Auth->user('id')); 
+			$this->set('account', $account);
 		}
 
 		/* API Actions */

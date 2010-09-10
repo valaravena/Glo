@@ -17,7 +17,7 @@ class SimpleGeoController extends SimpleGeoAppController {
 	}
 	
 	
-	function nearby($simpleGeoLayer) {
+	function nearby() {
 		$points = array();
 		if (!empty($simpleGeoLayer)) {
 			if (!empty($this->params['url']['hash'])) {

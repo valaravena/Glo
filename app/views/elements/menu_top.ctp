@@ -2,7 +2,7 @@
 $(function(){
        $('.editable').inlineEdit({
 			save: function(e, data) {  
-				$.post("<?php echo $html->url(array('controller' => 'accounts', 'action' => 'location')); ?>", data);
+				$.post("<?php echo $html->url(array('controller' => 'accounts', 'action' => 'location')); ?>", {"Account[location]": data});
 			}
 		});
    });
@@ -21,7 +21,7 @@ $(function(){
 	
 		<div style="float:right; margin:-25px 25px 0 0;">
 	   		<div class="current-city">
-	   			<?php echo sprintf(__('Currently in %s', true), $html->tag('span', 'Some City, St', array('class' => 'editable'))); ?>
+	   			<?php echo sprintf(__('Currently in %s', true), $html->tag('span', $account['Account']['location'], array('class' => 'editable'))); ?>
 			</div>      
 		</div>
 <!--	<div style="float:right; border: 1px solid #666;">

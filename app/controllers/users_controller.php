@@ -7,7 +7,8 @@ class UsersController extends AppController {
     var $name = 'Users';
 
     var $components = array('Recaptcha');
-    var $helpers = array('Recaptcha', 'SimpleGeo.GoogleMap');
+    var $helpers = array('Recaptcha', 'SimpleGeo.GoogleMap');   
+	var $uses = array('SimpleGeo.SimpleGeo');
 
     function beforeFilter() {
         parent::beforeFilter();

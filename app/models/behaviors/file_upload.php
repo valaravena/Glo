@@ -68,7 +68,7 @@ class FileUploadBehavior extends ModelBehavior{
 
             $config_temp[$field] = $options;
         }
-        $this->__fields = $config_temp;
+        $this->__fields = $config_temp;     
     }
 
     function beforeSave(&$model) {
@@ -116,16 +116,17 @@ class FileUploadBehavior extends ModelBehavior{
                     }
 
                     if(!isset($options['random_filename']) || !$options['random_filename']) {
-                    	$saveAs = realpath(WWW_ROOT . $options['directory']) .DS. $model->data[$model->name][$field]['name'];
+                    	$saveAs = realpath(WWW_ROOT . $options['directory']) . DS . $model->data[$model->name][$field]['name'];
                 	} else {
 	                    $uniqueFileName = sha1(uniqid(rand(), true));
 	                    $extension = explode('.', $model->data[$model->name][$field]['name']);
-	                    $saveAs    = realpath(WWW_ROOT . $options['directory']) .DS. $uniqueFileName . '.' . $extension[count($extension)-1];
+	                    $saveAs    = realpath(WWW_ROOT . $options['directory']) . DS . $uniqueFileName . '.' . $extension[count($extension)-1];  
                     }
-                }
+                } 
 
-                // Attempt to move uploaded file
-                if(!move_uploaded_file($model->data[$model->name][$field]['tmp_name'], $saveAs)) {
+                // Attempt to move uploaded file      
+                if(!move_uploaded_file($model->data[$model->name][$field]['tmp_name'], $saveAs)) {    
+					die('coud not upload');
                     unset($model->data[$model->name][$field]);
                     continue;
                 }
@@ -148,7 +149,7 @@ class FileUploadBehavior extends ModelBehavior{
 
     function beforeValidate(&$model)
     {
-        foreach($this->__fields as $field => $options) {
+        foreach($this->__fields as $field => $options) {      
             if(!empty($model->data[$model->name][$field]['type']) && !empty($options['allowed_mime'])) {
                 // Check extensions
                 if(count($options['allowed_extensions']) > 0) {

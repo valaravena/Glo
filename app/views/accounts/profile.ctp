@@ -9,7 +9,7 @@
 				<div style="position:relative;">
 					<h2 class="login"><?php echo __('Account Profile', true); ?></h2>
 					<fieldset>
-						<?php echo $form->create('Account');?>
+						<?php echo $form->create('Account', array('type' => 'file'));?>
 						<?php echo $form->input('image', array('type' => 'file', 'label' => __('Profile Image', true)))?>
 						<?php echo $form->input('full_name', array('label' => __('Full Name', true)))?> 
 						<?php echo $form->input('location', array('label' => __('Current Location', true)))?> 
@@ -20,7 +20,7 @@
 					</fieldset>
 					<div class="profile_image" >
 						<?php if (!empty($this->data['Account']['image'])): ?> 
-							<?php echo $this->data['Account']['image']?>
+							<?php echo $html->image('profile/140/'. $this->data['Account']['image'])?>
 						<?php else: ?>
 							<?php echo $html->image('no_photo.png', array('alt' => __('No Profile Photo', true)))?>
 						<?php endif; ?>

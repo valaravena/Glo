@@ -80,17 +80,19 @@ class AccountsController extends AppController {
 	function profile() {
 		$this->set('title_for_layout', __('Account Profile', true));
 		if ($this->Auth->user()) {
-			$account = $this->Account->findByUserId($this->Auth->user('id'));
+			$account = $this->Account->findByUserId($this->Auth->user('id')); 
 			$account['Account']['full_name'] = $account['Account']['first_name'] . " ". $account['Account']['last_name'];
 			if (!empty($this->data)) {         
 				$fullName = explode(" ", trim($this->data['Account']['full_name']));
-				list($lastName) = $fullName;  
-				die($lastName);
+				list($firstName, $lastName) = $fullName; 
+			   	$this->data['Account']['id'] = $account['Account']['id'];
+				$this->data['Account']['first_name'] = $firstName;
+				$this->data['Account']['last_name'] = $lastName; 
 				
-				if ($user = $this->Account->register($this->data, $this->Auth->user('id'))) {
-					$this->Session->setFlash(__('Your profile as been updated.', true), 'success');
-					$this->redirect(array('action' => 'account'));
-				} else {
+				if ($this->Account->save($this->data)) {
+					$this->Session->setFlash(__('Your profile has been updated.', true), 'success');
+					$this->redirect(array('action' => 'profile'));
+				} else {      
 					$this->Session->setFlash(__('Your profile could not be saved. Please, try again.', true), 'error');
 				}
 			}
@@ -184,16 +186,16 @@ class AccountsController extends AppController {
 	
 	
 	function location() {    
-		debug($this->params);
 		if (!$this->RequestHandler->isAjax()) {
             $this->redirect(array('action' => 'index'));
-        }
-		if (!empty($location)) {
-			echo $location;
-		}                   
-		echo "NO Location";
-		
-		
+        }      
+
+		if (!empty($this->params['form']['Account'])) {
+			$this->Account->recursive = 0;
+			$account = $this->Account->findByUserId($this->Auth->user('id'));
+			$this->Account->id = $account['Account']['id'];
+			$this->Account->saveField('location', $this->params['form']['Account']['location']);
+		}		
 	}
 	
 	
