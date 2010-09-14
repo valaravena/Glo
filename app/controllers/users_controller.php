@@ -21,7 +21,8 @@ class UsersController extends AppController {
         }
     }
 
-    function index() {       
+    function index() {   
+	    $this->set('title_for_layout', __('Account', true));
 		if ($this->Session->check('Auth.User')) {
 			$simpleGeoLayer = 'iWobbleTestLayer';
 		   	$points = array();
