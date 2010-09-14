@@ -8,7 +8,7 @@ var infowindow;
 $(document).ready(function() { 
 	var myOptions = {
 		zoom: 12,
-		mapTypeId: google.maps.MapTypeId.SATELLITE,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false
 	};
 
@@ -36,36 +36,36 @@ $(document).ready(function() {
 	
 	function updateLayer(latlng) { 
 		var epm_data = [
-			{"epm":56,"ame":2300,"ami":1,"renew":"CNG","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":67,"ame":1800,"ami":1,"renew":"NOT CERTIFIED","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":45,"ame":2546,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":88,"ame":3050,"ami":0,"renew":"CNG","ev":0,"leed":"CERTIFIED"},
-			{"epm":44,"ame":1457,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":87,"ame":2199,"ami":1,"renew":"CNG","ev":0,"leed":"SILVER"},
-			{"epm":77,"ame":2892,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":35,"ame":1913,"ami":1,"renew":"SOLAR","0":"CNG","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":96,"ame":3520,"ami":1,"renew":"SOLAR","ev":1,"leed":"PLATINUM"},
-			{"epm":58,"ame":4200,"ami":0,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":67,"ame":2765,"ami":0,"renew":"NONE","ev":0,"leed":"GOLD"},
-			{"epm":59,"ame":1965,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":68,"ame":3275,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":37,"ame":2134,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":52,"ame":2755,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":85,"ame":3877,"ami":1,"renew":"NONE","ev":1,"leed":"CERTIFIED"},
-			{"epm":34,"ame":2433,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":66,"ame":1933,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-		   	{"epm":87,"ame":1456,"ami":0,"renew":"SOLAR","ev":0,"leed":"CERTIFIED"},
-	 		{"epm":84,"ame":2345,"ami":1,"renew":"NONE","ev":0,"leed":"SILVER"},
-			{"epm":76,"ame":2756,"ami":1,"renew":"NONE","ev":0,"leed":"CERTIFIED"},
-			{"epm":56,"ame":4234,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":74,"ame":3244,"ami":0,"renew":"SOLAR","0":"CNG","ev":1,"leed":"NOT CERTIFIED"},
-			{"epm":73,"ame":1655,"ami":1,"renew":"SOLAR","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":62,"ame":4266,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":45,"ame":2311,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":52,"ame":1966,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":60,"ame":1077,"ami":1,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":28,"ame":2234,"ami":0,"renew":"NONE","ev":0,"leed":"NOT CERTIFIED"},
-			{"epm":65,"ame":3200,"ami":1,"renew":"NONE","ev":0,"leed":"CERTIFIED"}
+			{"epm":56,"ame":2300,"ami":"Yes","renew":"CNG","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":67,"ame":1800,"ami":"Yes","renew":"NOT CERTIFIED","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":45,"ame":2546,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":88,"ame":3050,"ami":"No","renew":"CNG","ev":"No","leed":"CERTIFIED"},
+			{"epm":44,"ame":1457,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":87,"ame":2199,"ami":"Yes","renew":"CNG","ev":"No","leed":"SILVER"},
+			{"epm":77,"ame":2892,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":35,"ame":1913,"ami":"Yes","renew":"SOLAR","0":"CNG","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":96,"ame":3520,"ami":"Yes","renew":"SOLAR","ev":"Yes","leed":"PLATINUM"},
+			{"epm":58,"ame":4200,"ami":"No","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":67,"ame":2765,"ami":"No","renew":"NONE","ev":"No","leed":"GOLD"},
+			{"epm":59,"ame":1965,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":68,"ame":3275,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":37,"ame":2134,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":52,"ame":2755,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":85,"ame":3877,"ami":"Yes","renew":"NONE","ev":"Yes","leed":"CERTIFIED"},
+			{"epm":34,"ame":2433,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":66,"ame":1933,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+		   	{"epm":87,"ame":1456,"ami":"No","renew":"SOLAR","ev":"No","leed":"CERTIFIED"},
+	 		{"epm":84,"ame":2345,"ami":"Yes","renew":"NONE","ev":"No","leed":"SILVER"},
+			{"epm":76,"ame":2756,"ami":"Yes","renew":"NONE","ev":"No","leed":"CERTIFIED"},
+			{"epm":56,"ame":4234,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":74,"ame":3244,"ami":"No","renew":"SOLAR","0":"CNG","ev":"Yes","leed":"NOT CERTIFIED"},
+			{"epm":73,"ame":1655,"ami":"Yes","renew":"SOLAR","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":62,"ame":4266,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":45,"ame":2311,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":52,"ame":1966,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":60,"ame":1077,"ami":"Yes","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":28,"ame":2234,"ami":"No","renew":"NONE","ev":"No","leed":"NOT CERTIFIED"},
+			{"epm":65,"ame":3200,"ami":"Yes","renew":"NONE","ev":"No","leed":"CERTIFIED"} 
 		];   
   		$.ajax({
 			url: "/simple_geo/simple_geo/nearby/?hash="+latlng.toUrlValue(), 
@@ -78,13 +78,13 @@ $(document).ready(function() {
 				  	var content = '<div class="map_popup" style="padding:0;margin:0;width:250px;">'+
 								'<h2 class="title" style="border-bottom: 1px solid #000">'+data.Point.name+'</h2>'+   
 			    
-								'<div style="padding:5px 0; margin:5px 0;border-bottom:1px solid #000;overflow:hidden"><strong>EPM-Premise Rating:</strong><br /><img src="/img/meter/b_'+imgNum+'.png" alt="'+imgNum+'"></div>'+
-				 
-							    '<p><strong>Avg. Monthly Usage:</strong> '+epm_data[recordNum].ame+'</p>'+
+								'<div style="padding:5px 0; margin:5px 0;border-bottom:1px solid #000;overflow:hidden"><strong>EPM-Premise Rating:</strong> '+epm_data[recordNum].epm+'<br /><img src="/img/meter/b_'+imgNum+'.png" alt="'+imgNum+'"></div>'+
+				               
+							    '<p><strong>Avg. Monthly Usage:</strong> '+epm_data[recordNum].ame+' kWh</p>'+
 								'<p><strong>AMI Ready:</strong> '+epm_data[recordNum].ami+'<br />'+   
 								'<p><strong>Renewable Sources:</strong> '+epm_data[recordNum].renew+'</p>'+   
 								'<p><strong>EV Charging Station:</strong> '+epm_data[recordNum].ev+'</p>'+   
-								'<p><strong>LEED Certifications:</strong> '+epm_data[recordNum].leed+'</p>'+      
+								'<p><strong>LEED Certification:</strong> '+epm_data[recordNum].leed+'</p>'+      
 								'</div>';  
 				 	var marker = new google.maps.Marker({
 						        	position: latlng,

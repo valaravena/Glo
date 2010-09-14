@@ -23,7 +23,7 @@ class SimpleGeoController extends SimpleGeoAppController {
 		$points = array();
 		if (!empty($simpleGeoLayer)) {
 			if (!empty($this->params['url']['hash'])) {       
-				$result = $this->SimpleGeo->getNearby($simpleGeoLayer, $this->params['url']['hash'], array('radius' => 200, 'limit' => 30));  
+				$result = $this->SimpleGeo->getNearby($simpleGeoLayer, $this->params['url']['hash'], array('limit' => 50));         
 				if (!empty($result->features)) {
 					foreach ($result->features as $feature) {
 						$point['Point']['id'] = $feature->id;
