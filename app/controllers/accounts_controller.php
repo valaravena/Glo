@@ -84,7 +84,8 @@ class AccountsController extends AppController {
 			$account['Account']['full_name'] = $account['Account']['first_name'] . " ". $account['Account']['last_name'];
 			if (!empty($this->data)) {         
 				$fullName = explode(" ", trim($this->data['Account']['full_name']));
-				list($firstName, $lastName) = $fullName; 
+				list($firstName, $lastName) = $fullName;   
+				
 			   	$this->data['Account']['id'] = $account['Account']['id'];
 				$this->data['Account']['first_name'] = $firstName;
 				$this->data['Account']['last_name'] = $lastName; 

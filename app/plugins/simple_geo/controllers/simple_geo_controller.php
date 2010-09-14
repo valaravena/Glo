@@ -17,15 +17,17 @@ class SimpleGeoController extends SimpleGeoAppController {
 	}
 	
 	
-	function nearby() {
+	function nearby() {      
+		$this->layout = 'ajax';
+		$simpleGeoLayer = 'com.simplegeo.us.business';
 		$points = array();
 		if (!empty($simpleGeoLayer)) {
-			if (!empty($this->params['url']['hash'])) {
-				$result = $this->SimpleGeo->getNearby($simpleGeoLayer, $this->params['url']['hash'], array('limit' => 50, 'radius' => 200));
+			if (!empty($this->params['url']['hash'])) {       
+				$result = $this->SimpleGeo->getNearby($simpleGeoLayer, $this->params['url']['hash'], array('radius' => 200, 'limit' => 30));  
 				if (!empty($result->features)) {
 					foreach ($result->features as $feature) {
 						$point['Point']['id'] = $feature->id;
-						$point['Point']['name'] = $feature->id;
+						$point['Point']['name'] = $feature->properties->std_name;
 	                	$point['Point']['longitude'] = $feature->geometry->coordinates[0];
 	                	$point['Point']['latitude'] = $feature->geometry->coordinates[1];
 	                	$point['Point']['created'] = $feature->created;
@@ -38,7 +40,7 @@ class SimpleGeoController extends SimpleGeoAppController {
 				}
 			}
 			$this->set('points', $points);
-		}
+		}    
 	}
 	
 	function records($id = null, $simpleGeoLayer = null) {

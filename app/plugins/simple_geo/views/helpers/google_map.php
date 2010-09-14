@@ -32,8 +32,8 @@ class GoogleMapHelper extends Helper {
 			    var map;
 				var lat;
 				var lon;
-			    var iconimage = \"http://labs.google.com/ridefinder/images/mm_20_red.png\";
-			  	var iconshadow = \"http://labs.google.com/ridefinder/images/mm_20_shadow.png\";
+			    var iconimage = \"http://glow/img/SGBluePin.png\";
+			  	var iconshadow = \"hhttp://glow/img/SGBluePin.png\";
 				if (google.loader.ClientLocation) {
 					lat = google.loader.ClientLocation.latitude;
 					lon = google.loader.ClientLocation.longitude;

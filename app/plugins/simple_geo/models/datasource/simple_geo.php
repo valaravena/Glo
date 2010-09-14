@@ -97,7 +97,7 @@ class SimpleGeo extends DataSource {
 		return $this->_sendRequest('/records/' . $layer . DS . $id . '/history.json', $args);
 	}
 	
-	public function getNearby($layer, $arg, array $args = array()) {
+	public function getNearby($layer, $arg, array $args = array()) {     
 		return $this->_sendRequest('/records/' . $layer . DS . 'nearby' . DS . $arg . '.json', $args);
 	}
 	

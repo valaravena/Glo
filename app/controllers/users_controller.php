@@ -21,29 +21,33 @@ class UsersController extends AppController {
         }
     }
 
-    function index() {    
-		$simpleGeoLayer = 'iWobbleTestLayer';
-	   	$points = array();
-		if (!empty($simpleGeoLayer)) {
-			if (!empty($this->params['url']['hash'])) {
-				$result = $this->SimpleGeo->getNearby($simpleGeoLayer, $this->params['url']['hash'], array('limit' => 50, 'radius' => 200));
-				if (!empty($result->features)) {
-					foreach ($result->features as $feature) {
-						$point['Point']['id'] = $feature->id;
-						$point['Point']['name'] = $feature->id;
-	                	$point['Point']['longitude'] = $feature->geometry->coordinates[0];
-	                	$point['Point']['latitude'] = $feature->geometry->coordinates[1];
-	                	$point['Point']['created'] = $feature->created;
-	                	$points[] = $point;
-	            	}
-	        	} else {
-					if (!empty($result->message)) {
-						#die($result->message);
+    function index() {       
+		if ($this->Session->check('Auth.User')) {
+			$simpleGeoLayer = 'iWobbleTestLayer';
+		   	$points = array();
+			if (!empty($simpleGeoLayer)) {
+				if (!empty($this->params['url']['hash'])) {
+					$result = $this->SimpleGeo->getNearby($simpleGeoLayer, $this->params['url']['hash'], array('limit' => 50, 'radius' => 200));
+					if (!empty($result->features)) {
+						foreach ($result->features as $feature) {
+							$point['Point']['id'] = $feature->id;
+							$point['Point']['name'] = $feature->id;
+		                	$point['Point']['longitude'] = $feature->geometry->coordinates[0];
+		                	$point['Point']['latitude'] = $feature->geometry->coordinates[1];
+		                	$point['Point']['created'] = $feature->created;
+		                	$points[] = $point;
+		            	}
+		        	} else {
+						if (!empty($result->message)) {
+							#die($result->message);
+						}
 					}
 				}
-			}
-			$this->set('points', $points);
-		}
+				$this->set('points', $points);
+			}  
+		} else {
+			$this->redirect('/login');
+		}  
 	}
 
     function login() {       

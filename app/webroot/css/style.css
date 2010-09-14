@@ -214,5 +214,19 @@ div#signup_steps .step {padding: 0;margin:0; margin: 5px 5px; }
 div#signup_steps .step h2 { padding:26px 8px; text-transform:uppercase;color:#fff; background: #ccc;}
 div#signup_steps .selected {background: url(../img/tri-blue.png) no-repeat;margin-left:-8px;}
 div#signup_steps .selected h2 {background: #5DA2D7; display:block;margin-left:8px;}
-#signup_steps ul li.active { padding-left:0; margin-left:0px;background:  url(../img/tri-blue.png) no-repeat;}
+#signup_steps ul li.active { padding-left:0; margin-left:0px;background:  url(../img/tri-blue.png) no-repeat;}  
+
+
+
+
+/* Map stuff */
+.map_popup {
+	
+}   
+
+.map_popup .title {
+	font-weight: bold;
+	text-align:center;
+	font-size:15px;
+}
 
