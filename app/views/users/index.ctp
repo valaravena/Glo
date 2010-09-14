@@ -100,7 +100,6 @@ $(document).ready(function() {
 					  	$('.map_popup').parent().css('overflow','hidden');
 					
 					});
-					map.setCenter(latlng);
 				});
 				
 			}
