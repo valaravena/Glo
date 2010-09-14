@@ -71,15 +71,15 @@ $(document).ready(function() {
 			url: "/simple_geo/simple_geo/nearby/?hash="+latlng.toUrlValue(), 
 			dataType: 'json',
 			success: function(result) {
-				$.each(result, function(i, data) {   
+				$.each(result, function(i, data) {  
 					var latlng = new google.maps.LatLng(data.Point.latitude,data.Point.longitude);  
 					var recordNum = i % epm_data.length;  
 					var imgNum = ((epm_data[recordNum].epm%10)*10);
-				  	var content = '<div class="map_popup" style="padding:0;margin:0;overflow:hidden">'+
-								'<h2 class="title">'+data.Point.name+'</h2>'+   
-								'<hr />'+       
-								'<div><strong>EPM-Premise Rating:</strong><br /><img src="/img/meter/b_'+imgNum+'.png" alt="'+imgNum+'"></div>'+
-							    '<hr />'+ 
+				  	var content = '<div class="map_popup" style="padding:0;margin:0;width:250px;">'+
+								'<h2 class="title" style="border-bottom: 1px solid #000">'+data.Point.name+'</h2>'+   
+			    
+								'<div style="padding:5px 0; margin:5px 0;border-bottom:1px solid #000;overflow:hidden"><strong>EPM-Premise Rating:</strong><br /><img src="/img/meter/b_'+imgNum+'.png" alt="'+imgNum+'"></div>'+
+				 
 							    '<p><strong>Avg. Monthly Usage:</strong> '+epm_data[recordNum].ame+'</p>'+
 								'<p><strong>AMI Ready:</strong> '+epm_data[recordNum].ami+'<br />'+   
 								'<p><strong>Renewable Sources:</strong> '+epm_data[recordNum].renew+'</p>'+   
@@ -95,7 +95,10 @@ $(document).ready(function() {
 					  
 					  if (infowindow) infowindow.close(); 
 					  infowindow = new google.maps.InfoWindow({content: content});
-					  infowindow.open(map,marker);
+					  infowindow.open(map,marker);  
+						$('.map_popup').parent().parent().css('overflow','hidden');
+					  	$('.map_popup').parent().css('overflow','hidden');
+					
 					});
 					map.setCenter(latlng);
 				});
