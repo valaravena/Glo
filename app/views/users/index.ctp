@@ -35,7 +35,6 @@ $(document).ready(function() {
    
 	
 	function updateLayer(latlng) { 
-		var iconimage = "http://glow/img/SGBluePin.png";
 		var epm_data = [
 			{"epm":56,"ame":2300,"ami":1,"renew":"CNG","ev":0,"leed":"NOT CERTIFIED"},
 			{"epm":67,"ame":1800,"ami":1,"renew":"NOT CERTIFIED","ev":0,"leed":"NOT CERTIFIED"},
@@ -90,7 +89,7 @@ $(document).ready(function() {
 				 	var marker = new google.maps.Marker({
 						        	position: latlng,
 						  			map: map, 
-									icon: "http://glow/img/SGBluePin.png"
+									icon: "/img/SGBluePin.png"
 						        });		
 					google.maps.event.addListener(marker, 'click', function() {   
 					  
