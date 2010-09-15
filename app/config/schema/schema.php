@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2010-08-23 17:08:55 : 1282597675*/
+/* App schema generated on: 2010-09-15 16:09:38 : 1284583118*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -16,7 +16,7 @@ class AppSchema extends CakeSchema {
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array(),
 		'tableParameters' => array()
 	);
 	var $accounts = array(
@@ -25,10 +25,12 @@ class AppSchema extends CakeSchema {
 		'user_id' => array('type' => 'text', 'null' => false, 'default' => NULL, 'length' => 11),
 		'first_name' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'last_name' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'bio' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'location' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'date_of_birth' => array('type' => 'date', 'null' => true, 'default' => NULL),
 		'gender_id' => array('type' => 'text', 'null' => true, 'default' => NULL, 'length' => 11),
-		'email' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'image' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'newsletter' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 1),
 		'active' => array('type' => 'text', 'null' => true, 'default' => NULL, 'length' => 1),
 		'key' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'source_id' => array('type' => 'text', 'null' => true, 'default' => NULL, 'length' => 11),
@@ -36,7 +38,7 @@ class AppSchema extends CakeSchema {
 		'ip' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array(),
 		'tableParameters' => array()
 	);
 	var $acos = array(
@@ -73,15 +75,15 @@ class AppSchema extends CakeSchema {
 		'tableParameters' => array()
 	);
 	var $core_resources = array(
-		'code' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'primary', 'length' => 50),
+		'code' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 50, 'key' => 'primary'),
 		'version' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 50),
-		'indexes' => array('PRIMARY' => array('column' => 'code', 'unique' => 1)),
+		'indexes' => array(),
 		'tableParameters' => array()
 	);
 	var $genders = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array(),
 		'tableParameters' => array()
 	);
 	var $groups = array(
@@ -92,22 +94,35 @@ class AppSchema extends CakeSchema {
 		'indexes' => array(),
 		'tableParameters' => array()
 	);
+	var $pages = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
+		'name' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'title' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'meta_description' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'meta_keywords' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'slug' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'content' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'top_show' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'bottom_show' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'top_order' => array('type' => 'text', 'null' => true, 'default' => '0', 'length' => 3),
+		'bottom_order' => array('type' => 'text', 'null' => true, 'default' => '0', 'length' => 3),
+		'indexes' => array(),
+		'tableParameters' => array()
+	);
 	var $sources = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'name' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
+		'indexes' => array(),
 		'tableParameters' => array()
 	);
 	var $users = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'group_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
 		'username' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'first_name' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'last_name' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'password' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'email' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'active' => array('type' => 'boolean', 'null' => false, 'default' => NULL),
-		'key' => array('type' => 'string', 'null' => false),
+		'key' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'ip' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
