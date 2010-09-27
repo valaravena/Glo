@@ -73,8 +73,8 @@ $(document).ready(function() {
 			success: function(result) {
 				$.each(result, function(i, data) {  
 					var latlng = new google.maps.LatLng(data.Point.latitude,data.Point.longitude);  
-					var recordNum = i % epm_data.length;  
-					var imgNum = ((epm_data[recordNum].epm%10)*10);
+					var recordNum = i % epm_data.length;      
+					var imgNum = ((Math.floor(epm_data[recordNum].epm/10)%10)*10); 
 				  	var content = '<div class="map_popup" style="padding:0;margin:0;width:250px;">'+
 								'<h2 class="title" style="border-bottom: 1px solid #000">'+data.Point.name+'</h2>'+   
 			    

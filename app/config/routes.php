@@ -20,7 +20,8 @@
 	
 	// Users
 	SuperRouter::connect('/register', array('controller' => 'users', 'action' => 'register'));
-	SuperRouter::connect('/login', array('controller' => 'users', 'action' => 'login'));
+	SuperRouter::connect('/login', array('controller' => 'users', 'action' => 'login'));  
+	SuperRouter::connect('/logout', array('controller' => 'users', 'action' => 'logout'));
 	SuperRouter::connect('/recover', array('controller' => 'users', 'action' => 'recover'));
 	
 	Router::parseExtensions('xml','json', 'csv');

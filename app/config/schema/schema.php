@@ -104,8 +104,8 @@ class AppSchema extends CakeSchema {
 		'content' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'top_show' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'bottom_show' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'top_order' => array('type' => 'text', 'null' => true, 'default' => '0', 'length' => 3),
-		'bottom_order' => array('type' => 'text', 'null' => true, 'default' => '0', 'length' => 3),
+		'top_order' => array('type' => 'text', 'null' => true, 'default' => NULL, 'length' => 3),
+		'bottom_order' => array('type' => 'text', 'null' => true, 'default' => NULL, 'length' => 3),
 		'indexes' => array(),
 		'tableParameters' => array()
 	);

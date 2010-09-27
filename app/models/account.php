@@ -9,7 +9,7 @@ class Account extends AppModel {
 			'image' => array(
 				'required'				=> array('add' => true, 'edit' => false),
 				'directory'				=> 'img/profile',
-				'allowed_mime' 	    => array('image/jpeg', 'image/pjpeg', 'image/gif', 'image/png'),
+				'allowed_mime' 	    => array('image/jpeg', 'image/jpg', 'image/gif', 'image/png'),
 				'allowed_extensions' => array('.jpg', '.jpeg', '.png', '.gif'),
 				'allowed_size'			=> 2097152,
 				'random_filename'		=> true,
@@ -21,7 +21,23 @@ class Account extends AppModel {
 							'far'   => 1,
 							'bg'    => 'FFFFFF'   
 						)                             
-			   	    )                              
+			   	    ),
+				  'thumb' => array(
+					'directory' => 'img/profile/140',
+					'width'         => 234234,
+					'phpThumb'      => array(
+						'far'   => 1,
+						'bg'    => 'FFFFFF'   
+					)                             
+		   	    ),
+				'grande' => array(
+					'directory' => 'img/profile/140',
+					'width'         => 23,
+					'phpThumb'      => array(
+						'far'   => 1,
+						'bg'    => 'FFFFFF'   
+					)                             
+		   	    )                            
 				)
 		    )
 	    )                                                                     

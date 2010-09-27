@@ -8,7 +8,7 @@ class UsersController extends AppController {
 
     var $components = array('Recaptcha');
     var $helpers = array('Recaptcha', 'SimpleGeo.GoogleMap');   
-	var $uses = array('SimpleGeo.SimpleGeo');
+	var $uses = array('SimpleGeo.SimpleGeo','Group');
 
     function beforeFilter() {
         parent::beforeFilter();
@@ -21,7 +21,8 @@ class UsersController extends AppController {
         }
     }
 
-    function index() {   
+    function index() {    
+
 	    $this->set('title_for_layout', __('Account', true));
 		if ($this->Session->check('Auth.User')) {
 			$simpleGeoLayer = 'iWobbleTestLayer';
@@ -51,9 +52,9 @@ class UsersController extends AppController {
 		}  
 	}
 
-    function login() {       
+    function login() {
 		$this->set('title_for_layout', __('Login', true));
-        if (!empty($this->data)) {    
+        if (!empty($this->data)) {
             if (!empty($this->data['User']['remember_me']) && 
 				$this->data['User']['remember_me'] == 1) {    
                 $this->Cookie->write('User.id', $this->Auth->user('id'));
@@ -70,7 +71,8 @@ class UsersController extends AppController {
 			$this->Cookie->delete('User.id');
 	    }
         $this->redirect($this->Auth->logout());
-    }
+    }   
+
 
     function register($status = '') {
 		$this->set('title_for_layout', __('Register with Gridglo', true));        
@@ -200,6 +202,13 @@ class UsersController extends AppController {
 				$this->redirect(array('action' => 'changepassword'));
 			}
 		}
+	} 
+	
+   function asdfasdf() {   
+		$users = $this->User->find('all');
+		
+		$this->set('test', $users); 
+		
 	}
 	
 

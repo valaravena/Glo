@@ -74,16 +74,19 @@
 class DATABASE_CONFIG {
 
 	var $default = array(
-		'driver' => 'sqlite',
+		'driver' => 'mysql',
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '',
-		'database' => '/Users/jmashburn/Documents/Projects/Glow/app/config/schema/glow.sqlite',
+		'password' => 'root',
+		'database' => 'glow',
+		#'database' => '/Users/jmashburn/Documents/Projects/Glow/app/config/schema/glow.sqlite',
 		'prefix' => '',
+		'port' => '/Applications/MAMP/tmp/mysql/mysql.sock',
 		'encoding' => 'UTF8'
 	);
 
+  
 	var $test = array(
 		'driver' => 'mysql',
 		'persistent' => false,

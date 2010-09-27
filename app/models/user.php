@@ -57,10 +57,6 @@ class User extends AppModel {
                     'rule' => array('between', 3, 16),
                     'message' => __('Username must be between 3 and 16 characters long.', true),
                 ),
-                'minLength' => array(
-                    'rule' => array('minLength', 1),
-                    'message' => __('Username is a required field', true)
-                )
             ),
 			'password' => array(
 				'notEmpty' => array(

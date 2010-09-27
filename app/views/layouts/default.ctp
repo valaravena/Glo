@@ -35,6 +35,7 @@
 		?>
 	</div>
 	<div id="container">
+		<?php $this->log('Test');?>
 		<div id="header">
 			<div id="logo">
 				<?php echo $html->link($html->image('logo.gif', array('alt' => $appConfigurations['name'], 'title' => $appConfigurations['name'])), '/', array('escape' => false)); ?>
